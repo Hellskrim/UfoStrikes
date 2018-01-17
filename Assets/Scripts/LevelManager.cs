@@ -11,8 +11,6 @@ public class LevelManager : MonoBehaviour {
     }
     public void LoadNextLevel()
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        Application.LoadLevel(Application.loadedLevel + 1);
-#pragma warning restore CS0618 // Type or member is obsolete
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

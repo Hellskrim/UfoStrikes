@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundScript : MonoBehaviour {
 
@@ -12,9 +13,9 @@ public class SoundScript : MonoBehaviour {
     public AudioClip endClip;
 
     private AudioSource sound;
-
-    // Use this for initialization
-    void Start () {
+    
+    void OnEnable () {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
         if (music != null && music != this)
         {
             GameObject.Destroy(gameObject);
@@ -29,15 +30,19 @@ public class SoundScript : MonoBehaviour {
             sound.Play();
         }
 	}
-    private void OnLevelWasLoaded(int level)
+    void OnDisable()
     {
-        Debug.Log("loaded music level" + level);
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
         sound.Stop();
-        if (level == 0)
+        if (scene.buildIndex == 0)
             sound.clip = startClip;
-        if (level == 1)
+        if (scene.buildIndex == 1)
             sound.clip = gameClip;
-        if (level == 2)
+        if (scene.buildIndex == 2)
             sound.clip = endClip;
         sound.loop = true;
         sound.Play();

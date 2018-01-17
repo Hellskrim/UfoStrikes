@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow)) 
         {
             transform.position += Vector3.left * shipSpeed * Time.deltaTime;
         }
